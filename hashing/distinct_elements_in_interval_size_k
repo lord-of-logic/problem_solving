@@ -1,0 +1,30 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    int k=3;
+    int n=7;
+    int h[100]={0};
+    int dist=0;
+    int A[7]={10,10,20,30,30,40,10};
+    for(int i=0;i<n;i++)
+    {
+        if(i>=k)
+        {
+            h[A[i-k]]-=1;
+            if(h[A[i-k]]==1)
+                dist+=1;
+            if(h[A[i-k]]==0)
+                dist-=1;
+        }
+        h[A[i]]+=1;
+        if(h[A[i]]==1)
+            dist+=1;
+        if(h[A[i]]==2)
+            dist-=1;
+        if(i>=k-1)
+            cout<<"The distinct elements in window "<<i-k+2<<" are "<<dist<<"\n";
+    }
+}

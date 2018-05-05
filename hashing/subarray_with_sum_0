@@ -1,0 +1,31 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    int n=9;
+    int h[100]={0};
+    int B[10]={0};
+    int A[9]={11,10,-5,-3,-2,10,5,-1,-6};
+    int sum=0;
+    int flag=0;
+    for(int i=0;i<n;i++)
+    {
+        sum+=A[i];
+        B[i+1]=sum;
+    }
+    for(int i=0;i<n+1;i++)
+    {
+        h[B[i]]+=1;
+    }
+    for(int i=0;i<100;i++)
+    {
+        flag+=(h[i])*(h[i]-1)/2;
+    }
+    cout<<"Number of sub arrays with sum 0 are: "<<flag;
+    return 0;
+}
+
+//Time Complexity: O(n) but a huge drawback is that we assume that only positive integers are present in cumulative array.
+//And good news is we can overcome this drawback by adding least negative integer to each sum and insert into hash.

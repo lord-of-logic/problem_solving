@@ -1,0 +1,32 @@
+//Lucky number is nothing but the number which is left out after deleting all the 2nd numbers in first interation, 3rd number in 
+//second iteration and so on check until that number is no more deleted.
+//Ex:
+//1,2,3,4,5,6,7,8,9,10 i=2
+//1,3,5,7,9 i=3
+//1,3,7,9 i=4
+//1,3,7 i=5
+//Hence 1,3,7 can no more be deleted and hence declare them as luck. Now given a number find out if it is lucky or not.
+
+#include<iostream>
+
+using namespace std;
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    int flag=1;
+    int index=n-1;
+    for(int i=2;index+1>=i;i++)
+    {
+        if((index+1)%i==0)
+        {
+            flag=0;
+            break;
+        }
+        index-=index/i;
+    }
+    flag==1?cout<<"Lucky number":cout<<"Not a lucky number";
+    return 0;
+}

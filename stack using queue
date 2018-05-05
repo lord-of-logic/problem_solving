@@ -1,0 +1,42 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+bool insert(vector<int> &A,int n)
+{
+    A.push_back(n);
+    return true;
+}
+
+int pop(vector<int> &Q1,vector<int> &Q2)
+{
+    if(Q1.size()==0)
+        return 0;
+    while(Q1.size()>1)
+    {
+        insert(Q2,Q1[0]);
+        Q1.erase(Q1.begin());
+    }
+    int ret=Q1[0];
+    Q1.erase(Q1.begin());
+    while(Q2.size()>0)
+    {
+        insert(Q1,Q2[0]);
+        Q2.erase(Q2.begin());
+    }
+    return ret;
+}
+
+int main()
+{
+    vector<int> Q1;
+    vector<int> Q2;
+    //pop(Q1,Q2);
+    cout<<pop(Q1,Q2);
+    cout<<pop(Q1,Q2);
+    //cout<<pop(Q1,Q2);
+    return 0;
+}
+
+//Time complexity: O(1) for insert and O(n) for pop.

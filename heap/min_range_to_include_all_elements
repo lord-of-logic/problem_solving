@@ -1,0 +1,140 @@
+#include<iostream>
+
+using namespace std;
+
+int swap(int A[],int i,int j)
+{
+    int temp=A[i];
+    A[i]=A[j];
+    A[j]=temp;
+    return 0;
+}
+
+int max(int A[],int i)
+{
+    return A[2*i+1]>A[2*i+2]?2*i+1:2*i+2;
+}
+
+int min(int A[],int i)
+{
+    return A[2*i+1]<A[2*i+2]?2*i+1:2*i+2;
+}
+
+bool max_heapify(int A[],int i,int *heap_size)
+{
+    if(i>=*heap_size/2)
+        return true;
+    if(*heap_size%2==0 && i==*heap_size/2-1)
+    {
+        if(A[i]<A[2*i+1])
+            swap(A,i,2*i+1);
+        return true;
+    }
+    if(A[i]>A[2*i+1] && A[i]>A[2*i+2])
+        return true;
+    int max_index=max(A,i);
+    swap(A,i,max_index);
+    return true && max_heapify(A,max_index,heap_size);
+}
+
+bool build_max_heap(int A[],int i,int *heap_size)
+{
+    if(i<0)
+        return true;
+    max_heapify(A,i,heap_size);
+    return build_max_heap(A,i-1,heap_size);
+}
+
+int delete_max(int A[],int n,int *heap_size)
+{
+    int max=A[0];
+    A[0]=A[*heap_size-1];
+    max_heapify(A,0,heap_size);
+    *heap_size-=1;
+    return max;
+}
+
+bool min_heapify(int A[],int i,int *heap_size)
+{
+    if(i>*heap_size/2)
+        return true;
+    if(i==*heap_size/2-1 && *heap_size%2==0)
+    {
+        if(A[i]>A[2*i+1])
+            swap(A,i,2*i+1);
+        return true;
+    }
+    if(A[i]<A[2*i+1] && A[i]<A[2*i+2])
+        return true;
+    int min_index=min(A,i);
+    swap(A,i,min_index);
+    return true && max_heapify(A,min_index,heap_size);
+}
+
+bool build_min_heap(int A[],int i,int *heap_size)
+{
+    if(i<0)
+        return true;
+    min_heapify(A,i,heap_size);
+    return build_min_heap(A,i-1,heap_size);
+}
+
+int delete_min(int A[],int n,int *heap_size)
+{
+    int min=A[0];
+    A[0]=A[*heap_size-1];
+    min_heapify(A,0,heap_size);
+    *heap_size-=1;
+    return min;
+}
+
+int binary_greater(int A[],int size,int n)
+{
+    int first=0;
+    int last=size;
+    int just_greater;
+    while(first<last)
+    {
+        int middle=(first+last)/2;
+        if(A[middle]==n)
+            return A[middle];
+        else if(A[middle]>n)
+        {
+            just_greater=A[middle];
+            last=middle;
+        }
+        else
+            first=middle+1;
+    }
+    return just_greater;
+}
+
+int main()
+{
+    int n=4;
+    int k=4;//number of lists
+    int A[4]={15,27,35,42};
+    int B[4]={12,14,16,21};
+    int C[4]={10,25,55,67};
+    int D[4]={23,33,41,43};
+
+    //lower_bound
+    int max_array[4]={A[3],B[3],C[3],D[3]};
+    int *max_array_heap_size=new int;
+    *max_array_heap_size=4;
+    build_min_heap(max_array,k,max_array_heap_size);
+    int lower_bound=delete_min(max_array,k,max_array_heap_size);
+
+    //upper_bound
+    int greater_array[3]={0};
+    greater_array[0]=binary_greater(A,4,lower_bound);
+    greater_array[1]=binary_greater(C,4,lower_bound);
+    greater_array[2]=binary_greater(D,4,lower_bound);
+    int *min_array_heap_size=new int;
+    *min_array_heap_size=3;
+    build_max_heap(greater_array,k-1,min_array_heap_size);
+    int upper_bound=delete_max(greater_array,k-1,min_array_heap_size);
+
+    cout<<"["<<lower_bound<<","<<upper_bound<<"]"<<" is the minimum range.";
+    return 0;
+}

@@ -1,0 +1,56 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int insert(vector<int>& A,int n,int *min)
+{
+    if(n>*min)
+    {
+        A.push_back(n);
+        return 0;
+    }
+    A.push_back(n-*min);
+    *min=n;
+    return 0;
+}
+
+int pop(vector<int>& A,int *min)
+{
+    if(A[A.size()-1]>*min)
+    {
+        int ret=A[A.size()-1];
+        A.erase(A.end()-1);
+        return ret;
+    }
+    int ret=*min-A[A.size()-1];
+    *min=ret;
+    A.erase(A.end()-1);
+    return ret;
+}
+
+int main()
+{
+    vector<int> A;
+    int *min=new int;
+    *min=10;
+    insert(A,10,min);
+    cout<<*min<<"\n";
+    insert(A,20,min);
+    cout<<*min<<"\n";
+    insert(A,5,min);
+    cout<<*min<<"\n";
+    insert(A,15,min);
+    cout<<*min<<"\n";
+    insert(A,3,min);
+    cout<<*min<<"\n";
+    pop(A,min);
+    cout<<*min<<"\n";
+    insert(A,6,min);
+    cout<<*min<<"\n";
+    insert(A,2,min);
+    cout<<*min<<"\n";
+    insert(A,1,min);
+    cout<<*min<<"\n";
+    return 0;
+}

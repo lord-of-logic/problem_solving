@@ -1,0 +1,22 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    string str="rrrranjjjjjjjjjithshhhhhhiiiiivvvaa5465555((((((())4";
+    int count=0;
+    int h[256]={0};
+    for(unsigned int i=0;i<str.length();i++)
+    {
+        if(h[str[i]]==0)
+        {
+            str[count]=str[i];
+            count++;
+            h[str[i]]=1;
+        }
+    }
+    str.erase(str.begin()+count,str.end());
+    cout<<str;
+    return 0;
+}

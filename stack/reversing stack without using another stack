@@ -1,0 +1,56 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int insert(vector<int> &S,int n)
+{
+    S.push_back(n);
+    return 0;
+}
+
+int pop(vector<int> &S)
+{
+    int ret=S[S.size()-1];
+    S.erase(S.end()-1);
+    return ret;
+}
+
+int insert_bottom(vector<int> &S,int n)
+{
+    if(S.size()==0)
+    {
+        S.push_back(n);
+        return 0;
+    }
+    int temp=pop(S);
+    insert_bottom(S,n);
+    S.push_back(temp);
+}
+
+int reverse(vector<int> &S)
+{
+    if(S.size()==0)
+        return 0;
+    int temp=pop(S);
+    reverse(S);
+    insert_bottom(S,temp);
+    return 0;
+}
+
+int main()
+{
+    vector<int> S;
+    insert(S,0);
+    insert(S,1);
+    insert(S,2);
+    insert(S,3);
+    cout<<"The original stack is:\n";
+    for(int i=S.size()-1;i>=0;i--)
+        cout<<S[i]<<"\n";
+    reverse(S);
+    cout<<"The reversed stack is:\n";
+    for(int i=S.size()-1;i>=0;i--)
+        cout<<S[i]<<"\n";
+    return 0;
+}

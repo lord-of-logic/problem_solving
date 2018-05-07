@@ -1,0 +1,42 @@
+#include<iostream>
+
+using namespace std;
+
+void swap(string& str,int i,int j)
+{
+    char temp=str[i];
+    str[i]=str[j];
+    str[j]=temp;
+}
+
+void reverse(string& str,int first,int last)
+{
+    while(first<last)
+    {
+        swap(str,first,last);
+        first++;
+        last--;
+    }
+}
+
+int main()
+{
+    string str;
+    cout<<"Enter the string: ";
+    getline(cin,str);
+    int first=0;
+    int last=0;
+    for(unsigned int i=0;i<str.length();i++)
+    {
+        if(str[i]==' ')
+        {
+            reverse(str,first,i-1);
+            first=i+1;
+            continue;
+        }
+    }
+    reverse(str,first,str.length()-1);
+    reverse(str,0,str.length()-1);
+    cout<<str;
+    return 0;
+}

@@ -1,0 +1,46 @@
+#include<iostream>
+#include<vector>
+#include<math.h>
+
+using namespace std;
+
+int insert(vector<char>& S,char c)
+{
+    S.push_back(c);
+    return 0;
+}
+
+char pop(vector<char>& S)
+{
+    char ret=S[S.size()-1];
+    S.erase(S.end()-1);
+    return ret;
+}
+
+int main()
+{
+    string str="{{}{{}}{{{}";
+    vector<char> S;
+    int m=0,n=0;
+    for(unsigned int i=0;i<str.length();i++)
+    {
+        if(str[i]=='{')
+        {
+            insert(S,str[i]);
+            continue;
+        }
+        if(str[i]=='}' && S.size()!=0 && S[S.size()-1]=='{')
+            pop(S);
+        else
+            insert(S,str[i]);
+    }
+    for(unsigned int i=0;i<S.size();i++)
+        S[i]=='{'?m+=1:n+=1;
+    if((m+n)%2!=0)
+    {
+        cout<<"Not possible";
+        return 0;
+    }
+    cout<<ceil(m/2)+ceil(n/2);
+    return 0;
+}

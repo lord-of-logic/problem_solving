@@ -1,0 +1,24 @@
+#include<iostream>
+
+using namespace std;
+
+void swap(string& str, int i,int j)
+{
+    char temp=str[i];
+    str[i]=str[j];
+    str[j]=temp;
+}
+
+int main()
+{
+    string str="srujana";
+    int i=0,j=str.length()-1;
+    while(i<j)
+    {
+        swap(str,i,j);
+        i++;
+        j--;
+    }
+    cout<<str;
+    return 0;
+}

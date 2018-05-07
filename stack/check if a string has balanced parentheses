@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int insert(vector<char> &S,char c)
+{
+    S.push_back(c);
+    return 0;
+}
+
+char pop(vector<char>& S)
+{
+    char top=S[S.size()-1];
+    S.erase(S.end()-1);
+    return top;
+}
+
+int main()
+{
+    string B="{{}}";
+    vector<char> S;
+    for(unsigned int i=0;i<B.length();i++)
+    {
+        if(B[i]=='(' || B[i]=='{' || B[i]=='[')
+        {
+            insert(S,B[i]);
+            continue;
+        }
+        if(B[i]==')' && S[S.size()-1]=='(')
+            pop(S);
+        else if(B[i]=='}' && S[S.size()-1]=='{')
+            pop(S);
+        else if(B[i]==']' && S[S.size()-1]=='[')
+            pop(S);
+        else
+            break;
+    }
+    S.size()==0?cout<<"Balanced":cout<<"Not Balanced";
+    return 0;
+}

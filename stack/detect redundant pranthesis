@@ -1,0 +1,44 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int insert(vector<char>& S,char c)
+{
+    S.push_back(c);
+    return 0;
+}
+
+char pop(vector<char>& S)
+{
+    char ret=S[S.size()-1];
+    S.erase(S.end()-1);
+    return ret;
+}
+
+int main()
+{
+    string str="(3*4)";
+    vector<char> S;
+    for(unsigned int i=0;i<str.length();i++)
+    {
+        if(str[i]!=')')
+        {
+            insert(S,str[i]);
+            continue;
+        }
+        if(str[i]==')' && S[S.size()-1]=='(')
+        {
+            cout<<"Redundant";
+            return 0;
+        }
+        while(S[S.size()-1]!='(')
+            pop(S);
+        pop(S);
+    }
+    cout<<"Not redundant";
+    return 0;
+}
+
+//Time complexity: O(n)
+//Space complecity: O(n)

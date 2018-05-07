@@ -1,0 +1,22 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    string str="raaanjith";
+    int h[26]={0};
+    int max=0;
+    char max_char='a';
+    for(unsigned int i=0;i<str.length();i++)
+    {
+        h[str[i]-'a']+=1;
+        if(h[str[i]-'a']>max)
+        {
+            max=h[str[i]-'a'];
+            max_char=str[i];
+        }
+    }
+    cout<<max_char<<" "<<max;
+    return 0;
+}

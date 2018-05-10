@@ -1,0 +1,52 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int insert(vector<int> &S,int n)
+{
+    S.push_back(n);
+    return 0;
+}
+
+int pop(vector<int>& S)
+{
+    int top=S[S.size()-1];
+    S.erase(S.end()-1);
+    return top;
+}
+
+int main()
+{
+    int A[10]={10,15,15,25,35,42,54,69,73,100};
+    int n=10;
+    vector<int> S;
+    vector<int> B(n);
+    for(int i=0;i<n;i++)
+    {
+        if(S.size()==0)
+        {
+            insert(S,i);
+            continue;
+        }
+        if(A[S[S.size()-1]]>A[i])
+        {
+            insert(S,i);
+            continue;
+        }
+        while(S.size()!=0 && A[S[S.size()-1]]<A[i])
+        {
+            B[S[S.size()-1]]=A[i];
+            pop(S);
+        }
+        insert(S,i);
+    }
+    while(S.size()!=0)
+    {
+        B[S[S.size()-1]]=-127;
+        pop(S);
+    }
+    for(unsigned int i=0;i<B.size();i++)
+        cout<<B[i]<<" ";
+    return 0;
+}

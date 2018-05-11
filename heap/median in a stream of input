@@ -1,0 +1,158 @@
+#include<iostream>
+#include<vector>
+#include<iomanip>
+
+using namespace std;
+
+int swap(vector<float>& V,int i,int j)
+{
+    float temp=V[i];
+    V[i]=V[j];
+    V[j]=temp;
+    return 0;
+}
+
+int maxi(vector<float> V,int a,int b)
+{
+    return V[a]>V[b]?a:b;
+}
+
+int mini(vector<float> V,int a,int b)
+{
+    return V[a]<V[b]?a:b;
+}
+
+bool max_heapify(vector<float>& max_heap,int i)
+{
+    if(i>=max_heap.size()/2)
+        return true;
+    if(max_heap.size()%2==0 && i==max_heap.size()/2-1)
+    {
+        if(max_heap[i]>max_heap[2*i+1])
+            return true;
+        swap(max_heap,i,2*i+1);
+        return true;
+    }
+    if(max_heap[i]>max_heap[2*i+1] && max_heap[i]>max_heap[2*i+2])
+        return true;
+    int max_index=maxi(max_heap,2*i+1,2*i+2);
+    swap(max_heap,i,max_index);
+    return max_heapify(max_heap,max_index);
+}
+
+bool min_heapify(vector<float>& min_heap,int i)
+{
+    if(i>=min_heap.size()/2)
+        return true;
+    if(min_heap.size()%2==0 && i==min_heap.size()/2-1)
+    {
+        if(min_heap[i]<min_heap[2*i+1])
+            return true;
+        swap(min_heap,i,2*i+1);
+        return true;
+    }
+    if(min_heap[i]<min_heap[2*i+1] && min_heap[i]<min_heap[2*i+2])
+        return true;
+    int min_index=mini(min_heap,2*i+1,2*i+2);
+    swap(min_heap,i,min_index);
+    return min_heapify(min_heap,min_index);
+}
+
+float build_max_heap(vector<float>& max_heap,int max_heap_size)
+{
+    for(int i=max_heap_size/2-1;i>=0;i--)
+        max_heapify(max_heap,i);
+    return 0;
+}
+
+float build_min_heap(vector<float>& min_heap,int min_heap_size)
+{
+    for(int i=min_heap_size/2-1;i>=0;i--)
+        min_heapify(min_heap,i);
+    return 0;
+}
+
+float delete_max(vector<float>& max_heap)
+{
+    if(max_heap.size()==0)
+        return 0;
+    float max=max_heap[0];
+    max_heap[0]=max_heap[max_heap.size()-1];
+    max_heap.erase(max_heap.end()-1);
+    max_heapify(max_heap,0);
+    return max;
+}
+
+float delete_min(vector<float>& min_heap)
+{
+    if(min_heap.size()==0)
+        return 0;
+    float min=min_heap[0];
+    min_heap[0]=min_heap[min_heap.size()-1];
+    min_heap.erase(min_heap.end()-1);
+    min_heapify(min_heap,0);
+    return min;
+}
+
+int main()
+{
+    int T;
+    float n;
+    vector<float> max_heap;
+    int max_heap_size=0;
+    vector<float> min_heap;
+    int min_heap_size=0;
+    cin>>T;
+    for(int i=0;i<T;i++)
+    {
+        //cout<<"Enter the ele:";
+        cin>>n;
+        if(max_heap.size()==0 && min_heap.size()==0)
+        {
+            max_heap.push_back(n);
+            max_heap_size++;
+        }
+        else if(max_heap[0]>n)
+        {
+            max_heap.push_back(n);
+            max_heap_size++;
+            build_max_heap(max_heap,max_heap_size);
+        }
+        else
+        {
+            min_heap.push_back(n);
+            min_heap_size++;
+            build_min_heap(min_heap,min_heap_size);
+        }
+        if((max_heap_size-min_heap_size)>1)
+        {
+            float max=delete_max(max_heap);
+            min_heap.push_back(max);
+            max_heap_size--;
+            min_heap_size++;
+            build_min_heap(min_heap,min_heap_size);
+        }
+        if(max_heap_size-min_heap_size < -1)
+        {
+            float min=delete_min(min_heap);
+            max_heap.push_back(min);
+            min_heap_size--;
+            max_heap_size++;
+            build_max_heap(max_heap,max_heap_size);
+        }/*
+        cout<<"max:";
+        for(int i=0;i<max_heap_size;i++)
+            cout<<max_heap[i]<<" ";
+        cout<<"\nmin:";
+        for(int i=0;i<min_heap_size;i++)
+            cout<<min_heap[i]<<" ";
+        cout<<"\n";*/
+        if(min_heap.size()==max_heap.size())
+            cout<<fixed<<setprecision(1)<<(min_heap[0]+max_heap[0])/2.0<<"\n";
+        if(min_heap.size()>max_heap.size())
+            cout<<fixed<<setprecision(1)<<(min_heap[0]/1.0)<<"\n";
+        if(min_heap.size()<max_heap.size())
+            cout<<fixed<<setprecision(1)<<(max_heap[0]/1.0)<<"\n";
+    }
+    return 0;
+}

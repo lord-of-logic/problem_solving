@@ -1,0 +1,47 @@
+#include<iostream>
+
+using namespace std;
+
+int swap(string& str,int i,int j)
+{
+    char temp=str[i];
+    str[i]=str[j];
+    str[j]=temp;
+    return 0;
+}
+
+string rev(string& str)
+{
+    int first=0;
+    int last=str.length()-1;
+    while(first<last)
+    {
+        swap(str,first,last);
+        first++;
+        last--;
+    }
+    return str;
+}
+
+int main()
+{
+    int i;
+    cin>>i;
+    string col="";
+    int rem;
+    while(i>26)
+    {
+        rem=i%26;
+        if(rem==0)
+        {
+            col+="Z";
+            i=i/26-1;
+            continue;
+        }
+        col+=rem+64;
+        i=i/26;
+    }
+    col+=i+64;
+    cout<<rev(col);
+    return 0;
+}

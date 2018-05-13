@@ -1,0 +1,61 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int min(int a,int b,int c)
+{
+    if(a<b && a<c)
+        return a;
+    if(b<c && b<a)
+        return b;
+    return c;
+}
+
+int main()
+{
+    int A[5][5]={
+    {1,1,1,1,1},
+    {0,1,1,1,1},
+    {1,1,1,1,1},
+    {0,1,1,0,1},
+    {0,0,1,1,1},
+    };
+    int n=5;
+    vector<vector<int> >B;
+    int max_size=0;
+    for(int i=0;i<n;i++)
+    {
+        vector<int> b;
+        for(int j=0;j<n;j++)
+        {
+            if(i==0 || j==0)
+            {
+                if(A[i][j]==0)
+                    b.push_back(0);
+                else
+                    b.push_back(1);
+                if(max_size<b[j])
+                    max_size=b[j];
+            }
+            else
+            {
+                if(A[i][j]==0)
+                    b.push_back(0);
+                else
+                    b.push_back(1+min(B[i-1][j],b[j-1],B[i-1][j-1]));
+                if(max_size<b[j])
+                    max_size=b[j];
+            }
+        }
+        B.push_back(b);
+    }
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+            cout<<B[i][j]<<" ";
+        cout<<"\n";
+    }
+    cout<<"The size of largest matrix with all one's: "<<max_size;
+    return 0;
+}

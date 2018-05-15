@@ -1,0 +1,32 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+    int A[8]={2,10,11,5,3,4,12,1};
+    int n=8;
+    vector<int> B;
+    B.push_back(1);
+    for(int i=1;i<n;i++)
+    {
+        int max_len=1;
+        for(int j=0;j<i;j++)
+            if(A[j]>A[i])
+                if(max_len<B[j]+1)
+                    max_len=B[j]+1;
+        B.push_back(max_len);
+    }
+    int max_len=0;
+    for(int i=0;i<n;i++)
+    {
+        cout<<B[i]<<" ";
+        if(max_len<B[i])
+            max_len=B[i];
+    }
+    cout<<"\n";
+    cout<<max_len;
+    return 0;
+}
+

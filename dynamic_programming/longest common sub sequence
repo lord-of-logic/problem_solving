@@ -1,0 +1,74 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int maxi(int a,int b)
+{
+    return a>b?a:b;
+}
+
+int main()
+{
+    string str1="ABCBDAB";
+    string str2="BDCABA";
+    vector<vector<int> > A;
+    cout<<"    ";
+    for(int i=0;i<str2.length();i++)
+        cout<<str2[i]<<" ";
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        vector<int> a;
+        for(int j=0;j<str2.length()+1;j++)
+        {
+            if(i==0 || j==0)
+            {
+                a.push_back(0);
+                continue;
+            }
+            if(str1[i-1]==str2[j-1])
+            {
+                a.push_back(1+A[i-1][j-1]);
+                continue;
+            }
+            a.push_back(maxi(A[i-1][j],a[j-1]));
+        }
+        A.push_back(a);
+    }
+    cout<<"\n  ";
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        for(int j=0;j<str2.length()+1;j++)
+            cout<<A[i][j]<<" ";
+        cout<<"\n";
+        cout<<str1[i]<<" ";
+    }
+    int l_c_s=A[str1.length()][str2.length()];
+    cout<<"\nLength of longest common sub sequence is: "<<l_c_s<<"\n";
+    string str3(l_c_s,' ');
+    int i=str1.length();
+    int j=str2.length();
+    while(i>=0 && j>=0 && l_c_s>0)
+    {
+        if(str1[i-1]==str2[j-1])
+        {
+            str3[l_c_s-1]=str1[i-1];
+            l_c_s--;
+            i--;
+            j--;
+            continue;
+        }
+        if(A[i-1][j]==l_c_s)
+        {
+            i--;
+            continue;
+        }
+        if(A[i][j-1]==l_c_s)
+        {
+            j--;
+            continue;
+        }
+    }
+    cout<<"Longest sub sequence is: "<<str3;
+    return 0;
+}

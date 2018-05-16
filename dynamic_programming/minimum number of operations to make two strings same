@@ -1,0 +1,58 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int mini(int a,int b,int c)
+{
+    if(a<b && a<c)
+        return a;
+    if(b<c && b<a)
+        return b;
+    return c;
+}
+
+int main()
+{
+    string str1="RANJITH";
+    string str2="DATA";
+    vector<vector<int> > A;
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        vector<int> a;
+        for(int j=0;j<str2.length()+1;j++)
+        {
+            if(i==0)
+            {
+                a.push_back(j);
+                continue;
+            }
+            if(j==0)
+            {
+                a.push_back(i);
+                continue;
+            }
+            if(str1[i-1]==str2[j-1])
+            {
+                a.push_back(A[i-1][j-1]);
+                continue;
+            }
+            a.push_back(1+mini(A[i-1][j-1],A[i-1][j],a[j-1]));
+        }
+        A.push_back(a);
+    }
+    cout<<"    ";
+    for(int i=0;i<str2.length();i++)
+        cout<<str2[i]<<" ";
+    cout<<"\n  ";
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        for(int j=0;j<str2.length()+1;j++)
+            cout<<A[i][j]<<" ";
+        cout<<"\n";
+        cout<<str1[i]<<" ";
+    }
+    int min_op=A[str1.length()][str2.length()];
+    cout<<"\nMinimum number of operations required are: "<<min_op;
+    return 0;
+}

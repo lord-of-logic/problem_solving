@@ -1,0 +1,63 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int max(int a,int b)
+{
+    return a>b?a:b;
+}
+/*---------------------------------------Naive approach ----------------------------
+int palin(string str,int i,int j)                                                  -
+{                                                                                  -
+    if(i==j)                                                                       -
+        return 1;                                                                  -
+    if(i>j)                                                                        -
+        return 0;                                                                  -
+    if(str[i]==str[j])                                                             -
+        return 2+palin(str,i+1,j-1);                                               -
+    return max(palin(str,i,j-1),palin(str,i+1,j));                                 -
+}                                                                                  -
+------------------------------------------------------------------------------------*/
+int main()
+{
+    string str="sdncefelrzsxaabgxqarrpmekwoffzlzfablfiwyjowjqxppqphhhtntrczwdmwknzvuhst";
+    vector<vector<int> > V(str.length(),vector<int>(str.length(),0));
+    for(int fill=0;fill<str.length();fill++)
+    {
+        for(int i=0,j=fill;i<str.length() && j<str.length();i++,j++)
+        {
+            if(i==j)
+            {
+                V[i][j]=1;
+                continue;
+            }
+            if(str[i]==str[j])
+            {
+                V[i][j]=2+V[i+1][j-1];
+                continue;
+            }
+            V[i][j]=max(V[i+1][j],V[i][j-1]);
+        }
+    }
+    cout<<"  ";
+    for(int i=0;i<str.length();i++)
+        cout<<str[i]<<" ";
+    cout<<"\n";
+    for(int i=0;i<str.length();i++)
+    {
+        cout<<str[i]<<" ";
+        for(int j=0;j<str.length();j++)
+        {
+            if(j<i)
+            {
+                cout<<"N ";
+                continue;
+            }
+            cout<<V[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+    cout<<V[0][str.length()-1]<<"\n";
+    return 0;
+}

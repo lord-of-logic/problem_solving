@@ -1,0 +1,44 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+    int A[]={6,3,2,1};
+    int n=4;
+    int sum=5;
+    vector<vector<bool> > V(sum+1,vector<bool>(n+1,false));
+    for(int i=0;i<sum+1;i++)
+    {
+        for(int j=0;j<n+1;j++)
+        {
+            if(i==0)
+            {
+                V[i][j]=true;
+                continue;
+            }
+            if(j==0 && i!=0)
+            {
+                V[i][j]=false;
+                continue;
+            }
+            if(A[j-1]>i)
+            {
+                V[i][j]=V[i][j-1];
+                continue;
+            }
+            V[i][j]=V[i-A[j-1]][j-1] || V[i][j-1];
+        }
+    }
+    for(int i=0;i<sum+1;i++)
+    {
+        for(int j=0;j<n+1;j++)
+        {
+            cout<<V[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+    (V[sum][n]==true)?cout<<"YES":cout<<"NO";
+    return 0;
+}

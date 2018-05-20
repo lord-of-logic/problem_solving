@@ -1,0 +1,49 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int min(int a,int b)
+{
+    return a<b?a:b;
+}
+
+int main()
+{
+    int x=1;
+    int y=2;
+    string str1,str2;
+    str1="RAVI";
+    str2="AIBC";
+    vector<vector<int> > V(str1.length()+1,vector<int> (str2.length()+1,0));
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        for(int j=0;j<str2.length()+1;j++)
+        {
+            if(i==0)
+            {
+                V[i][j]=j*y;
+                continue;
+            }
+            if(j==0)
+            {
+                V[i][j]=i*x;
+                continue;
+            }
+            if(str1[i-1]==str2[j-1])
+            {
+                V[i][j]=V[i-1][j-1];
+                continue;
+            }
+            V[i][j]=min(x+V[i-1][j],y+V[i][j-1]);
+        }
+    }
+    for(int i=0;i<str1.length()+1;i++)
+    {
+        for(int j=0;j<str2.length()+1;j++)
+            cout<<V[i][j]<<" ";
+        cout<<"\n";
+    }
+    cout<<"The minimum cost is: "<<V[str1.length()][str2.length()];
+    return 0;
+}

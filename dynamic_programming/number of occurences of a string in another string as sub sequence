@@ -1,0 +1,42 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+    string str1,str2;
+    str1="hsveymqpxhlrnunyfdzrhbasjeuygafoubutpnimuwfjqsjxvkqdorxxvrwctds";
+    str2="neog";
+    vector<vector<int> > V(str1.length()+1,vector<int> (str2.length()+1,0));
+    for(unsigned int i=0;i<str1.length()+1;i++)
+    {
+        for(unsigned int j=0;j<str2.length()+1;j++)
+        {
+            if(i==0)
+            {
+                V[i][j]=1;
+                continue;
+            }
+            if(j==0)
+            {
+                V[i][j]=0;
+                continue;
+            }
+            if(str1[i-1]==str2[j-1])
+            {
+                V[i][j]=V[i-1][j-1]+V[i][j-1];
+                continue;
+            }
+            V[i][j]=V[i][j-1];
+        }
+    }
+    for(unsigned int i=0;i<str1.length()+1;i++)
+    {
+        for(unsigned int j=0;j<str2.length()+1;j++)
+            cout<<V[i][j]<<" ";
+        cout<<"\n";
+    }
+    cout<<"Number of occurrences are: "<<V[str1.length()][str2.length()];
+    return 0;
+}

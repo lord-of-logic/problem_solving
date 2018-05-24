@@ -14,8 +14,8 @@ int main()
         int max=A[i];
         for(int j=0;j<B.size();j++)
             if(A[i]>A[j])
-                if(max<A[i]+A[j])
-                    max=A[i]+A[j];
+                if(max<A[i]+B[j])
+                    max=A[i]+B[j];
         B.push_back(max);
     }
     int max=0;
@@ -28,4 +28,3 @@ int main()
     cout<<"\n"<<max;
     return 0;
 }
-

@@ -1,0 +1,42 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class node
+{
+public:
+    char data;
+    node *left;
+    node*right;
+    node(char a)
+    {
+        this->data=a;
+        this->left=nullptr;
+        this->right=nullptr;
+    }
+};
+
+int count_full_nodes(node* root)
+{
+    if(!root->left && !root->right)
+        return 0;
+    if(!root->left)
+        return count_full_nodes(root->right);
+    if(!root->right)
+        return count_full_nodes(root->left);
+    return 1+count_full_nodes(root->left)+count_full_nodes(root->right);
+}
+
+int main()
+{
+    node *root=new node('a');
+    root->left=new node('b');
+    root->right=new node('c');
+    root->left->left=new node('d');
+    root->left->right=new node('e');
+    root->right->left=new node('f');
+    root->right->right=new node('g');
+    cout<<"Number of full nodes in the tree are: "<<count_full_nodes(root);
+    return 0;
+}

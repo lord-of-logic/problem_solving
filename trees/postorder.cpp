@@ -17,7 +17,7 @@ public:
     }
 };
 
-void postorder(struct node*root)
+void postorder(node* root)
 {
     if(!root)
         return;

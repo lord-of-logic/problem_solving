@@ -37,6 +37,6 @@ int main()
     root->left->right=new node('e');
     root->right->left=new node('f');
     root->right->right=new node('g');
-    cout<<"Number of leafs in the tree are: "<<count_non_leafs(root);
+    cout<<"Number of non leafs in the tree are: "<<count_non_leafs(root);
     return 0;
 }

@@ -19,6 +19,8 @@ public:
 
 int count_full_nodes(node* root)
 {
+    if(!root)
+        return 0;
     if(!root->left && !root->right)
         return 0;
     if(!root->left)

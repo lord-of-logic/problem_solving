@@ -24,7 +24,7 @@ int max(int a, int b)
 
 int height(node* root)
 {
-    if(!root)
+    if(!root || (!root->left && !root->right))
         return 0;
     return 1+max(height(root->left),height(root->right));
 }

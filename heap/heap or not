@@ -1,0 +1,20 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+    int n=7;
+    int A[7]={25,12,16,13,10,8,14};
+    for(int i=0;i<n/2;i++)
+    {
+        if(!(A[2*i+1]<A[i] && A[2*i+2]<A[i]))
+        {
+            cout<<"Not a heap.\n";
+            cout<<"And a heap up to element "<<i<<".";
+            return 0;
+        }
+    }
+    cout<<"It's a heap";
+    return 0;
+}

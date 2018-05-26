@@ -1,0 +1,53 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+    vector<int> A{3,3,12,5,4,0,8};
+    vector<vector<int> > V(A.size(),vector<int> (A.size(),0));
+    for(int i=0;i<A.size();i++)
+    {
+        for(int j=0;j<A.size();j++)
+        {
+            if(j<i)
+                continue;
+            if(i==j)
+            {
+                V[i][j]=A[i];
+                continue;
+            }
+            V[i][j]=V[i][j-1]+A[j];
+        }
+    }
+    for(int i=0;i<A.size();i++)
+    {
+        for(int j=0;j<A.size();j++)
+            cout<<V[i][j]<<" ";
+        cout<<"\n";
+    }
+    int max_len=0;
+    int start=0;
+    int end=0;
+    for(int i=0;i<A.size();i++)
+    {
+        for(int j=0;j<A.size();j++)
+        {
+            if(j<i)
+                continue;/*
+            if((j-i)%2==0)
+                continue;*/
+            if(V[i][j]==V[j+1][(j+1)+(j-i)] && max_len<(j+1)+(j-i)-(i)+1)
+            {
+                max_len=(j+1)+(j-i)-(i)+1;
+                start=i;
+                end=(j+1)+(j-i);
+            }
+        }
+    }
+    cout<<"Maximum length sub array with equal half is: "<<max_len<<"\n";
+    for(int i=start;i<=end;i++)
+        cout<<A[i]<<" ";
+    return 0;
+}

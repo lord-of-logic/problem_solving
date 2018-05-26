@@ -21,13 +21,7 @@ int count_leafs(node* root)
 {
     if(!root)
         return 0;
-    if(!root->left && !root->right)
-        return 1;
-    if(!root->left)
-        return count_leafs(root->right);
-    if(!root->right)
-        return count_leafs(root->left);
-    return count_leafs(root->left)+count_leafs(root->right);
+    return (!root->left && !root->right)?1:count_leafs(root->left)+count_leafs(root->right);
 }
 
 int main()

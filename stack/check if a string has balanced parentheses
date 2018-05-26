@@ -1,41 +1,40 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 
 using namespace std;
 
-int insert(vector<char> &S,char c)
-{
-    S.push_back(c);
-    return 0;
-}
-
-char pop(vector<char>& S)
-{
-    char top=S[S.size()-1];
-    S.erase(S.end()-1);
-    return top;
-}
-
 int main()
 {
-    string B="{{}}";
-    vector<char> S;
-    for(unsigned int i=0;i<B.length();i++)
+    int T;
+    cin>>T;
+    while(T)
     {
-        if(B[i]=='(' || B[i]=='{' || B[i]=='[')
+        string str;
+        cin>>str;
+        stack<char> S;
+        int flag=1;
+        for(int i=0;i<str.length();i++)
         {
-            insert(S,B[i]);
-            continue;
+            if(str[i]=='(' || str[i]=='{' || str[i]=='[')
+            {
+                S.push(str[i]);
+                continue;
+            }
+            if(S.empty())
+            {
+                flag=0;
+                break;
+            }
+            if((str[i]==')' && S.top()!='(') || (str[i]=='}' && S.top()!='{') || (str[i]==']' && S.top()!='['))
+            {
+                flag=0;
+                break;
+            }
+            S.pop();
         }
-        if(B[i]==')' && S[S.size()-1]=='(')
-            pop(S);
-        else if(B[i]=='}' && S[S.size()-1]=='{')
-            pop(S);
-        else if(B[i]==']' && S[S.size()-1]=='[')
-            pop(S);
-        else
-            break;
+        (flag==1 && S.empty())?cout<<"YES\n":cout<<"NO\n";
+        T--;
     }
-    S.size()==0?cout<<"Balanced":cout<<"Not Balanced";
     return 0;
 }

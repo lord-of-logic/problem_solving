@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int data)
+    {
+        this->data=data;
+        this->left=nullptr;
+        this->right=nullptr;
+    }
+};
+
+void insert(node **root,int data)
+{
+    node *temp_root=*root;
+    if(!temp_root)
+    {
+        temp_root=new node(data);
+        *root=temp_root;
+        return;
+    }
+    if(temp_root->data>data)
+    {
+        insert(&temp_root->left,data);
+        return;
+    }
+    insert(&temp_root->right,data);
+    return;
+}
+
+bool is_identical(node *root1,node *root2)
+{
+    if((root1 && !root2) || (!root1 && root2))
+        return false;
+    if(!root1 && !root2)
+        return true;
+    return (root1->data==root2->data)?is_identical(root1->left,root2->left) && is_identical(root1->right,root2->right):false;
+}
+
+int main()
+{
+    node *root1=nullptr;
+    vector<int> A={50,15,62,5,20,58,91,3,8,37,60,24,100};
+    for(int i=0;i<A.size();i++)
+        insert(&root1,A[i]);
+    node *root2=nullptr;
+    vector<int> B={50,15,62,5,20,58,91,3,8,37,60,24,100};//5,9,11,4,0,91,52,105,111,97,96,99,98,2005,2009,2011,2018};
+    for(int i=0;i<B.size();i++)
+        insert(&root2,B[i]);
+    is_identical(root1,root2)?cout<<"The two trees are identical.":cout<<"The given two trees are not identical.";
+    return 0;
+}

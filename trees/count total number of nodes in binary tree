@@ -19,9 +19,7 @@ public:
 
 int count_nodes(node* root)
 {
-    if(!root)
-        return 0;
-    return 1+count_nodes(root->left)+count_nodes(root->right);
+    return root?1+count_nodes(root->left)+count_nodes(root->right):0;
 }
 
 int main()

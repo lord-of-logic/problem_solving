@@ -1,0 +1,56 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+
+using namespace std;
+
+void bfs(vector<long>* G,vector<long>& visited,long start_node)
+{
+    visited[start_node]=0;
+    queue<long> my_que;
+    my_que.push(start_node);
+    while(!my_que.empty())
+    {
+        long node=my_que.front();
+        my_que.pop();
+        for(auto itr=G[node].begin();itr!=G[node].end();itr++)
+        {
+            if(visited[*itr]==-1)
+            {
+                visited[*itr]=visited[node]+6;
+                my_que.push(*itr);
+            }
+        }
+    }
+    return;
+}
+
+int main()
+{
+    long T;
+    cin>>T;
+    while(T)
+    {
+        long num_nodes,num_edges;
+        cin>>num_nodes>>num_edges;
+        vector<long> G[num_nodes];
+        for(long i=0;i<num_edges;i++)
+        {
+            long start,end;
+            cin>>start>>end;
+            G[start-1].push_back(end-1);
+            G[end-1].push_back(start-1);
+        }
+        long start_node;
+        cin>>start_node;
+        start_node=start_node-1;
+        vector<long> visited(num_nodes,-1);
+        bfs(G,visited,start_node);
+        for(long i=0;i<visited.size();i++)
+            if(i!=start_node)
+                cout<<visited[i]<<" ";
+        cout<<"\n";
+        T--;
+    }
+    return 0;
+}

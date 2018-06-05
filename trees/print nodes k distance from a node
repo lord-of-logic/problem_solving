@@ -1,0 +1,93 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class node
+{
+public:
+    int data;
+    node *left;
+    node *right;
+    node(int data)
+    {
+        this->data=data;
+        this->left=nullptr;
+        this->right=nullptr;
+    }
+};
+
+void insert(node **root,int data)
+{
+    node *temp_root=*root;
+    if(!temp_root)
+    {
+        temp_root=new node(data);
+        *root=temp_root;
+        return;
+    }
+    if(temp_root->data>data)
+    {
+        insert(&temp_root->left,data);
+        return;
+    }
+    insert(&temp_root->right,data);
+    return;
+}
+
+void printkdistanceNodeDown(node *root, int k)
+{
+    if(!root)
+    return;
+    if(k==0)
+    {
+        cout<<root->data<<" ";
+        return;
+    }
+    printkdistanceNodeDown(root->left,k-1);
+    printkdistanceNodeDown(root->right,k-1);
+}
+
+int printkdistanceNode(node* root, node* target , int k)
+{
+    if(!root)
+        return -1;
+    if(root->data==target->data)
+    {
+        printkdistanceNodeDown(root,k);
+        return 1;
+    }
+    int dl=printkdistanceNode(root->left,target,k);
+    if(dl!=-1)
+    {
+        if(dl==k)
+        {
+            cout<<root->data<<" ";
+            return -1;
+        }
+        printkdistanceNodeDown(root->right,k-dl-1);
+        return dl+1;
+    }
+    int dr=printkdistanceNode(root->right,target,k);
+    if(dr!=-1)
+    {
+        if(dr==k)
+        {
+            cout<<root->data<<" ";
+            return -1;
+        }
+        printkdistanceNodeDown(root->left,k-dr-1);
+        return dr+1;
+    }
+    return -1;
+}
+
+int main()
+{
+    node *root=nullptr;
+    vector<int> A={50,15,62,5,20,58,91,3,8,37,60,24,100};
+    for(int i=0;i<A.size();i++)
+        insert(&root,A[i]);
+    printkdistanceNode(root,root->right->right,3);
+    return 0;
+}

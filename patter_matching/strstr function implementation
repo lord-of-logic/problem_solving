@@ -1,0 +1,41 @@
+#include<iostream>
+
+using namespace std;
+
+int match(string s,string x,int start)
+{
+    for(int i=0,j=start;i<x.length() && j<s.length();i++,j++)
+    {
+        if(s[j]!=x[i] || (j+1)>=s.length())
+                return -1;
+    }
+    return x.length();
+}
+
+int strstr(string s, string x)
+{
+     for(int i=0;i<s.length();i++)
+     {
+         if(s[i]==x[0])
+         {
+             int match_len=match(s,x,i);
+             if(match_len==x.length())
+                return i;
+         }
+     }
+     return -1;
+}
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string a;
+        string b;
+        cin>>a;
+        cin>>b;
+        cout<<strstr(a,b)<<endl;
+    }
+}

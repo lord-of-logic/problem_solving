@@ -1,8 +1,6 @@
-#include<iostream>
+#include<stdio.h>
 
-using namespace std;
-
-void swap(string& str, int i,int j)
+void swap(char *str, int i,int j)
 {
     char temp=str[i];
     str[i]=str[j];
@@ -11,14 +9,15 @@ void swap(string& str, int i,int j)
 
 int main()
 {
-    string str="srujana";
-    int i=0,j=str.length()-1;
+    char str[]="ranjith";
+    int str_len=7;
+    int i=0,j=str_len-1;
     while(i<j)
     {
         swap(str,i,j);
         i++;
         j--;
     }
-    cout<<str;
+    printf(str);
     return 0;
 }

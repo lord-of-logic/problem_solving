@@ -1,56 +1,96 @@
 #include<iostream>
-#include<vector>
+#include<stack>
 
 using namespace std;
 
-int insert(vector<int>& A,int n,int *min)
+class _stack
 {
-    if(n>*min)
-    {
-        A.push_back(n);
-        return 0;
-    }
-    A.push_back(n-*min);
-    *min=n;
-    return 0;
+stack<int> s;
+int minEle;
+public :
+    int getMin();
+    int pop();
+    void push(int);
+};
+
+
+/*returns min element from stack*/
+int _stack :: getMin()
+{
+   //Your code here
+   if(s.empty())
+   return -1;
+   return minEle;
 }
 
-int pop(vector<int>& A,int *min)
+/*returns poped element from stack*/
+int _stack ::pop()
 {
-    if(A[A.size()-1]>*min)
-    {
-        int ret=A[A.size()-1];
-        A.erase(A.end()-1);
-        return ret;
-    }
-    int ret=*min-A[A.size()-1];
-    *min=ret;
-    A.erase(A.end()-1);
-    return ret;
+   //Your code here
+    if(s.empty())
+        return -1;
+    int pop_ele=0;
+   if(s.top()<0)
+   {
+       pop_ele=minEle;
+       minEle=minEle-s.top();
+       s.pop();
+       return pop_ele;
+   }
+   pop_ele=s.top();
+   s.pop();
+   return pop_ele;
+}
+
+/*push element x into the stack*/
+void _stack::push(int x)
+{
+   //Your code here
+   if(s.empty())
+   {
+       s.push(x);
+       minEle=x;
+       return;
+   }
+   if(minEle>x)
+   {
+       s.push(x-minEle);
+       minEle=x;
+       return;
+   }
+   s.push(x);
 }
 
 int main()
 {
-    vector<int> A;
-    int *min=new int;
-    *min=10;
-    insert(A,10,min);
-    cout<<*min<<"\n";
-    insert(A,20,min);
-    cout<<*min<<"\n";
-    insert(A,5,min);
-    cout<<*min<<"\n";
-    insert(A,15,min);
-    cout<<*min<<"\n";
-    insert(A,3,min);
-    cout<<*min<<"\n";
-    pop(A,min);
-    cout<<*min<<"\n";
-    insert(A,6,min);
-    cout<<*min<<"\n";
-    insert(A,2,min);
-    cout<<*min<<"\n";
-    insert(A,1,min);
-    cout<<*min<<"\n";
-    return 0;
+   int t;
+   cin>>t;
+   while(t--)
+   {
+       int q;
+       cin>>q;
+        _stack *a = new _stack();
+       while(q--){
+       int qt;
+       cin>>qt;
+       if(qt==1)
+       {
+           //push
+           int att;
+           cin>>att;
+           a->push(att);
+       }
+       else if(qt==2)
+       {
+           //pop
+           cout<<a->pop()<<" ";
+       }
+       else if(qt==3)
+       {
+           //getMin
+           cout<<a->getMin()<<" ";
+       }
+       }
+       cout<<endl;
+   }
 }

@@ -10,9 +10,7 @@ def removePath(root,k):
     if(k<=0):
         return True
     if(root.left==None and root.right==None):
-        if(k>0):
-            return False
-        return True
+        return False
     leftPath=True
     leftPath=removePath(root.left,k-1)
     

@@ -22,7 +22,7 @@ def removePath(root,k):
         root.left=None
     if(rightPath==False):
         root.right=None
-    return leftPath and rightPath
+    return leftPath or rightPath
 
 def inorder(root):
     if root==None:
@@ -44,13 +44,13 @@ root.left=node(6)
 root.right=node(3)
 root.left.left=node(9)
 root.left.right=node(1)
-root.left.left.left=node(5)
-root.left.left.right=node(7)
+root.right.left=node(11)
+root.right.right=node(12)
 root.left.right.right=node(8)
-root.left.left.left.left=node(4)
-root.left.right.right.right=node(10)
-root.left.right.right.right.right=node(20)
-k=5
+root.left.right.left=node(5)
+root.left.right.left.left=node(4)
+
+k=3
 removePath(root,k)
 print("Inorder of processed tree: ",end="")
 inorder(root)

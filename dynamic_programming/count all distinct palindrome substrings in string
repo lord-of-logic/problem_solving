@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string.h>
+using namespace std;
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--)
+	{
+	    string str;
+	    cin>>str;
+	    vector<vector<bool> > V(str.length(),vector<bool>(str.length(),false));
+	    map<string,bool> M;
+	    int count_palin=0;
+	    for(int fill=0;fill<str.length();fill++)
+	    {
+	        for(int i=0,j=fill;i<str.length() && j<str.length();i++,j++)
+	        {
+	            string sub_str=str.substr(i,j-i+1);
+	            if(i==j)
+	            {
+	                V[i][j]=true;
+	                if(M.find(sub_str)==M.end())
+	                    count_palin++;
+	                M[sub_str]=true;
+	                continue;
+	            }
+	            if(str[j]!=str[i])
+	            {
+	                V[i][j]=false;
+	                continue;
+	            }
+	            if(j-i==1)
+	            {
+	                V[i][j]=true;
+	                if(M.find(sub_str)==M.end())
+	                    count_palin++;
+	                M[sub_str]=true;
+	                continue;
+	            }
+	            if(!V[i+1][j-1])
+	            {
+	                V[i][j]=false;
+	                continue;
+	            }
+	            V[i][j]=true;
+	            if(M.find(sub_str)==M.end())
+	                    count_palin++;
+                M[sub_str]=true;
+	        }
+	    }
+	    cout<<count_palin<<"\n";
+	}
+	return 0;
+}

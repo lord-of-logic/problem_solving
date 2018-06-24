@@ -5,19 +5,19 @@ int spanningTree(vector <pair<int,int> > g[], int n);
 int main()
 {
 	int t ;
-	int n,e;
-	int w, mC;
-	cin >> n>> e;
-	vector <pair<int,int> > adj[n+1];
-	for(int i = 0;i < e;++i)
-	{
-		int x,y;
-		cin >> x >> y >> w;
-		adj[x].push_back({w, y});
-		adj[y].push_back({w, x});
-	}
-	mC= spanningTree(adj, n);
-	cout << mC << endl;
+    int n,e;
+    int w, mC;
+    cin >> n>> e;
+    vector <pair<int,int> > adj[n+1];
+    for(int i = 0;i < e;++i)
+    {
+        int x,y;
+        cin >> x >> y >> w;
+        adj[x].push_back({w, y});
+        adj[y].push_back({w, x});
+    }
+    mC= spanningTree(adj, n);
+    cout << mC << endl;
 	return 0;
 }
 
@@ -27,9 +27,9 @@ public:
 	int u,v,w;
 	edge(int u,int w,int v)
 	{
-		this->u=u;
-		this->v=v;
-		this->w=w;
+	this->u=u;
+	this->v=v;
+	this->w=w;
 	}
 };
 
@@ -38,9 +38,9 @@ class myComparator
 public:
 	int operator() (const edge& e1, const edge& e2)
 	{
-		if(e1.w==e2.w)
-			return e1.u+e1.v+e1.w > e2.u+e2.v+e2.w;
-		return e1.w > e2.w;
+        if(e1.w==e2.w)
+            return e1.u+e1.v+e1.w > e2.u+e2.v+e2.w;
+        return e1.w > e2.w;
 	}
 };
 
@@ -78,7 +78,7 @@ int spanningTree(vector <pair<int,int> > g[], int n)
 		else
 		{
 			int old_comp=in_tree[min.v];
-			for(int i=0;i<n;i++)
+			for(int i=1;i<n+1;i++)
 				if(in_tree[i]==old_comp)
 					in_tree[i]=in_tree[min.u];
 		}
